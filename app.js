@@ -1,21 +1,27 @@
-function gerarNumeroAleatorio() {
-    return parseInt(Math.random() * 100 + 1);
-}
-
-exibirMensagemInicial();
-
+let listaDeNumerosSorteados = [];
+let numeroMaximo = 100;
 let numeroSecreto = gerarNumeroAleatorio();
 let tentativas = 1;
 
-// let titulo = document.querySelector('h1');
-// titulo.innerHTML = 'Jogo Secreto';
+function gerarNumeroAleatorio() {
+    let numeroEscolhido = parseInt(Math.random() * numeroMaximo + 1);
+    let quantidadeDeNumerosSorteados = listaDeNumerosSorteados.length;
 
-// let paragrafo = document.querySelector('p');
-// paragrafo.innerHTML = 'Escolha um número entre 1 e 100';
+    if (quantidadeDeNumerosSorteados == numeroMaximo) {
+        listaDeNumerosSorteados = [];
+    }
+    if(listaDeNumerosSorteados.includes(numeroEscolhido)){
+        return gerarNumeroAleatorio();
+    }else{
+        listaDeNumerosSorteados.push(numeroEscolhido);
+        return numeroEscolhido;
+    }
+}
 
 function exibirTextoNaTela(tag, texto){
     let campo = document.querySelector(tag);
     campo.innerHTML = texto;
+    responsiveVoice.speak(texto, 'Brazilian Portuguese Female', {rate: 1.2});
 }
 
 function exibirMensagemInicial(){
@@ -54,3 +60,5 @@ function reiniciarJogo(){
     limparCampo();
     document.getElementById('reiniciar').setAttribute('disabled', true);
 }
+
+exibirMensagemInicial();
